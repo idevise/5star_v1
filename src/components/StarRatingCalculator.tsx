@@ -29,16 +29,12 @@ const StarRatingCalculator = () => {
       return;
     }
 
-    const currentTotal = currentRating * currentReviews;
-    const targetTotal = desiredRating * (currentReviews + 1);
-    const requiredRating = targetTotal - currentTotal;
-    
-    if (requiredRating > 5) {
-      const additionalReviews = Math.ceil((desiredRating * (currentReviews + 1) - currentRating * currentReviews) / (5 - desiredRating));
-      setResult(additionalReviews);
-    } else {
-      setResult(1);
-    }
+    // New calculation formula
+    const requiredReviews = Math.ceil(
+      (currentReviews * (desiredRating - currentRating)) / (5 - desiredRating)
+    );
+
+    setResult(Math.max(1, requiredReviews));
   };
 
   const resetCalculator = () => {
